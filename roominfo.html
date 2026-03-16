@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hostel Room Info</title>
+  <style>
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth; /* Smooth scrolling */
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background-color: rgb(221, 203, 223);
+      color: #333;
+    }
+    @font-face {
+        font-family: "fonts";
+        src: url(fonts/Hello.otf);
+    }
+    @media (max-width: 768px) {
+    body {
+    font-size: 16px;
+    }
+
+    .container {
+        flex-direction: column;
+    }
+}
+
+    /* Header Navbar */
+    header{
+        height: 15%;
+        margin-left: 0;
+        position: fixed;
+        top: 0;
+        color: rgb(255, 246, 246);
+        width: 100%;
+       background-color: rgb(165, 129, 154);        
+         padding: 10px 0;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);  
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+    }
+    header nav {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    header nav a {
+      font-family: "fonts";
+      color: #fff;
+      text-decoration: none;
+      font-size: 30px;
+      font-weight: 200;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    header nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 0%;
+      height: 2px;
+      background: #b382b4;
+      transition: width 0.3s;
+    }
+
+    header nav a:hover {
+      color: #eef3f3;
+    }
+
+    header nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Sections */
+    section {
+      padding: 80px 20px;
+      min-height: 100vh;
+    }
+    h2 {
+      font-family: "fonts";
+      font-size: 39px;
+      margin-bottom: 25px;
+      color: #290927;
+      text-align: center;
+      font-weight: 400;
+    }
+
+    /* Room Info Card */
+    .room-card {
+      max-width: 750px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .room-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+
+    .room-card ul {
+      list-style: none;
+    }
+
+    .room-card ul li {
+      padding: 12px 0;
+      border-bottom: 1px solid #ddd;
+      font-size: 17px;
+    }
+
+    .room-card ul li strong {
+      color: #2c3e50;
+    }
+    footer{
+        font-size: 20px;
+        background-color: rgb(165, 129, 154);
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);  
+        bottom: 0;
+        color: rgb(230, 216, 216);
+        margin-bottom: 0;
+        text-align: center;
+    }
+    .logo{
+        text-align: center;
+        margin-left: 25px;
+    }
+    .logo h1{
+        margin: 0;
+        font-family: "fonts";
+        font-weight: 70;
+        font-size: 50px;
+    }
+    .logo p{
+        margin: -20px;
+        font-size: 20px;
+        color: rgb(255, 255, 255);;
+    }
+    .nav-title{
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Navbar -->
+  <header>
+     <div class="logo">
+            <h1>Roomify</h1>
+            <p>girl's hostel</p>
+        </div>
+        <div class="nav-title">
+    <nav>
+      <a href="#single">Single Bed</a>
+      <a href="#double">Double Bed</a>
+      <a href="#triple">Triple Bed</a>
+    </nav>
+    </div>
+  </header><br>
+
+  <!-- Single Bed Section -->
+  <section id="single">
+    <h2>Single Bed Room</h2>
+    <div class="room-card">
+      <ul>
+        <li><strong>Room Type:</strong> Single Sharing</li>
+        <li><strong>Room Size:</strong> 12ft x 15ft</li>
+        <li><strong>Facilities:</strong> Study Table, Chair, WiFi, Locker</li>
+        <li><strong>Rent:</strong> ₹5000 per month</li>
+        <li><strong>Washroom:</strong> Attached</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Double Bed Section -->
+  <section id="double">
+    <h2>Double Bed Room</h2>
+    <div class="room-card">
+      <ul>
+        <li><strong>Room Type:</strong> Double Sharing</li>
+        <li><strong>Room Size:</strong> 15ft x 18ft</li>
+        <li><strong>Facilities:</strong> Study Tables, Chairs, WiFi, Lockers</li>
+        <li><strong>Rent:</strong> ₹3500 per month (per student)</li>
+        <li><strong>Washroom:</strong> Attached</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Triple Bed Section -->
+  <section id="triple">
+    <h2>Triple Bed Room</h2>
+    <div class="room-card">
+      <ul>
+        <li><strong>Room Type:</strong> Triple Sharing</li>
+        <li><strong>Room Size:</strong> 18ft x 20ft</li>
+        <li><strong>Facilities:</strong> Study Tables, Chairs, WiFi, Lockers</li>
+        <li><strong>Rent:</strong> ₹2500 per month (per student)</li>
+        <li><strong>Washroom:</strong> Common</li>
+      </ul>
+    </div>
+  </section>
+<footer>
+  <p>Looking for a comfortable stay? Choose from our Single, Double, and triple rooms.</p>
+  <p>For booking assistance, Contact: hostel@web.com | +91-9876543210</p>
+  <p>© 2025 Hostel Booking System</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roomify – Hostel Information</title>
+
+<style>
+/* ===== RESET ===== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,body{
+  width:100%;
+  background:#f6f1f5;
+  font-family:Arial, sans-serif;
+  color:#2e1f29;
+  overflow-x:hidden;
+  height:100%;
+}
+
+/* ===== FONT ===== */
+@font-face{
+  font-family:"fonts";
+  src:url("fonts/Hello.otf");
+  font-display:swap;
+}
+
+/* ===== HEADER ===== */
+header{
+  position:fixed;
+  top:0;
+  width:100%;
+  height:90px;
+  background:rgba(255,255,255,0.85);
+  backdrop-filter:blur(8px);
+  box-shadow:0 4px 25px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  padding:0 70px;
+  z-index:1000;
+}
+
+.logo h1{
+  font-family:"fonts";
+  font-size:42px;
+  color:#6b4c5e;
+  font-weight:400;
+}
+
+.logo p{
+  font-size:14px;
+  color:#8b6a7d;
+  margin-top:-6px;
+}
+
+/* ===== CENTER TITLE ===== */
+.nav-title{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+.nav-title h1{
+  font-family:"fonts";
+  font-size:30px;
+  color:#6b4c5e;
+  font-weight:400;
+}
+
+/* ===== RIGHT NAV ===== */
+.nav-right{
+  margin-left:auto;
+}
+
+.nav-right a{
+  font-family:"fonts";
+  font-size:22px;
+  text-decoration:none;
+  color:#6b4c5e;
+  padding:8px 18px;
+  border-radius:20px;
+  transition:background 0.3s ease;
+}
+
+.nav-right a:hover{
+  background:rgba(107,76,94,0.1);
+}
+
+/* ===== PAGE ===== */
+.page-wrapper{
+  margin-top:120px;
+}
+
+main{
+  padding:40px 20px 80px;
+}
+
+.section{
+  max-width:1200px;
+  margin:0 auto 80px;
+  text-align:center;
+}
+
+.section h2{
+  font-family:"fonts";
+  font-size:38px;
+  color:#6b4c5e;
+  margin-bottom:30px;
+}
+
+.section p{
+  max-width:900px;
+  margin:25px auto 0;
+  font-size:17px;
+  color:#4a3743;
+  line-height:1.7;
+}
+
+/* ===== IMAGE GRID ===== */
+.image-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+}
+
+.image-grid img{
+  width:100%;
+  height:320px;
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.12);
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.image-grid img:hover{
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 22px 45px rgba(0,0,0,0.18);
+}
+
+/* ===== FOOTER ===== */
+footer{
+  background:#2e1f29;
+  color:#ddd;
+  text-align:center;
+  padding:50px 20px;
+}
+
+footer h3{
+  color:white;
+  margin-bottom:12px;
+}
+
+footer a{
+  color:#b48fa8;
+  text-decoration:none;
+  font-size:14px;
+}
+
+footer a:hover{
+  text-decoration:underline;
+}
+
+.social-icons img{
+  margin:0 8px;
+  transition:transform 0.3s;
+}
+
+.social-icons img:hover{
+  transform:scale(1.15);
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  header{
+    padding:0 25px;
+  }
+
+  .nav-title h1{
+    font-size:24px;
+  }
+
+  .nav-right a{
+    font-size:18px;
+  }
+
+  .section h2{
+    font-size:30px;
+  }
+
+  .image-grid img{
+    height:260px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    <h1>Roomify</h1>
+    <p>Girls Hostel</p>
+  </div>
+
+  <div class="nav-title">
+    <h1>Hostel Information</h1>
+  </div>
+
+  <nav class="nav-right">
+    <a href="index.php">Home</a>
+  </nav>
+</header>
+
+<div class="page-wrapper">
+<main>
+
+  <!-- ROOMS SECTION -->
+  <div class="section" id="room">
+    <h2>Our Rooms</h2>
+
+    <div class="image-grid">
+      <img src="hostelimg11.jpg" alt="Hostel Room">
+      <img src="hostelimg.jpg" alt="Hostel Interior">
+      <img src="Best PG in Greater Noida At Affordable Prices - TheHiveHostels.jpg" alt="Hostel Room View">
+    </div>
+
+    <p>
+      Our rooms are designed with comfort in mind. From soft bedding and clean interiors
+      to proper ventilation and free Wi-Fi, every detail ensures a peaceful and homely stay.
+    </p>
+  </div>
+
+  <!-- MESS SECTION -->
+  <div class="section" id="mess">
+    <h2>Mess & Dining</h2>
+
+    <div class="image-grid">
+      <img src="office canteen.jpg" alt="Mess Area">
+      <img src="messimg.jpg" alt="Dining Hall">
+      <img src="University Canteen Crowd Photography Background And Picture For Free Download - Pngtree.jpg" alt="Canteen">
+    </div>
+
+    <p>
+      Our hostel mess provides hygienic, nutritious, and tasty meals every day.
+      The menu is thoughtfully planned to keep students healthy and energized.
+    </p>
+  </div>
+
+</main>
+
+<footer>
+  <h3>Quick Links</h3>
+  <a href="#room">Rooms</a> | 
+  <a href="#mess">Mess</a>
+
+  <br><br>
+
+  <h3>Follow Us</h3>
+  <div class="social-icons">
+    <a href="#"><img src="facebook-icon.png" alt="Facebook" width="30"></a>
+    <a href="#"><img src="instagram-icon.png" alt="Instagram" width="30"></a>
+    <a href="#"><img src="twitter-icon.png" alt="Twitter" width="30"></a>
+  </div>
+
+  <br><br>
+  © 2025 Roomify Girls Hostel. All Rights Reserved.
+</footer>
+</div>
+
+</body>
+</html>
