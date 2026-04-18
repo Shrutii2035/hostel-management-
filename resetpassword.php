@@ -4,7 +4,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $useremail = trim($_POST['useremail']);
 
-    // Check if user exists (email OR username)
     $sql = "SELECT id FROM users WHERE email = ? OR username = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $useremail, $useremail);
@@ -31,7 +30,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               width: 100%;
               height: 100%;
               overflow-x: hidden;
-              background-color: #f6f1f5;
+              background: #f6e8f0;
+              background-image:
+                  radial-gradient(circle at 15% 15%, rgba(212, 83, 126, 0.35) 0%, transparent 40%),
+                  radial-gradient(circle at 85% 80%, rgba(179, 120, 200, 0.38) 0%, transparent 40%),
+                  radial-gradient(circle at 60% 10%, rgba(240, 180, 220, 0.4) 0%, transparent 35%),
+                  radial-gradient(circle at 30% 80%, rgba(200, 150, 210, 0.35) 0%, transparent 35%);
               font-family: Arial, sans-serif;
               color: #2e1f29;
               text-align: center;
@@ -43,7 +47,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               font-display: swap;
             }
 
-            /* Header */
+            /* BUBBLES */
+            .bubble {
+              position: fixed;
+              border-radius: 50%;
+              z-index: 0;
+            }
+
+            .b1 { width: 100px; height: 100px; background: rgba(212, 83, 126, 0.18);  top: 8%;     left: 5%;   }
+            .b2 { width: 60px;  height: 60px;  background: rgba(179, 120, 200, 0.2);  top: 15%;    right: 8%;  }
+            .b3 { width: 80px;  height: 80px;  background: rgba(240, 160, 210, 0.2);  bottom: 10%; left: 8%;   }
+            .b4 { width: 50px;  height: 50px;  background: rgba(200, 140, 220, 0.22); bottom: 15%; right: 6%;  }
+
+            /* HEADER */
             header {
               position: fixed;
               top: 0;
@@ -80,13 +96,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               font-weight: 400;
             }
 
-            /* Main */
+            /* MAIN */
             main {
               margin-top: 120px;
               display: flex;
               justify-content: center;
               align-items: center;
               padding: 40px 20px;
+              position: relative;
+              z-index: 1;
             }
 
             .reset-box {
@@ -95,8 +113,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               border-radius: 24px;
               width: 100%;
               max-width: 460px;
-              box-shadow: 0 20px 45px rgba(0,0,0,0.1);
+              box-shadow: 0 8px 32px rgba(160, 90, 140, 0.13), 0 1.5px 4px rgba(160, 90, 140, 0.07);
               text-align: center;
+              position: relative;
+            }
+
+            .reset-box::before {
+              content: '';
+              position: absolute;
+              border-radius: 50%;
+              width: 120px;
+              height: 120px;
+              background: rgba(212, 83, 126, 0.15);
+              top: -40px;
+              left: -40px;
+              z-index: -1;
+            }
+
+            .reset-box::after {
+              content: '';
+              position: absolute;
+              border-radius: 50%;
+              width: 90px;
+              height: 90px;
+              background: rgba(179, 120, 200, 0.2);
+              bottom: -30px;
+              right: -30px;
+              z-index: -1;
             }
 
             .reset-box h2 {
@@ -151,19 +194,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 flex-direction: column;
                 height: auto;
               }
-
-              .nav-title h1 {
-                font-size: 24px;
-              }
-
-              .reset-box {
-                padding: 35px 25px;
-              }
+              .nav-title h1 { font-size: 24px; }
+              .reset-box    { padding: 35px 25px; }
             }
           </style>
         </head>
 
         <body>
+
+        <!-- Bubbles -->
+        <div class="bubble b1"></div>
+        <div class="bubble b2"></div>
+        <div class="bubble b3"></div>
+        <div class="bubble b4"></div>
 
         <header>
           <div class="logo">

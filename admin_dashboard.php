@@ -153,6 +153,7 @@ tr:nth-child(even){
 
 .actions a:hover{background:#b48fa8;}
 </style>
+
 </head>
 
 <body>

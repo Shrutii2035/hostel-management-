@@ -13,26 +13,35 @@ if (!isset($_SESSION['user']) || !isset($_SESSION['email'])) {
 $email = $_SESSION['email'];
 
 /* CHECK IF USER HAS COMPLETED BOOKING */
-$sql = "SELECT b.booking_id, pd.personal_id
-        FROM bookings b
-        JOIN personal_details pd ON b.personal_id = pd.personal_id
-        WHERE pd.email = ?
-        LIMIT 1";
-
-$stmt = $conn->prepare($sql);
+// STEP 1: Get personal_id using email
+// echo "Session Email: " . $email;
+// exit();
+$stmt = $conn->prepare("SELECT personal_id FROM personal_details WHERE email=?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
-$result = $stmt->get_result();
+$res = $stmt->get_result();
 
-if ($result->num_rows == 0) {
-    $_SESSION['review_error'] = "Fill form and complete booking to share your review.";
+if ($res->num_rows == 0) {
+    $_SESSION['review_error'] = "User not found.";
     header("Location: user_dashboard.php");
     exit();
 }
 
-$row = $result->fetch_assoc();
+$row = $res->fetch_assoc();
 $personal_id = $row['personal_id'];
 
+
+// STEP 2: Check if booking exists
+$stmt2 = $conn->prepare("SELECT * FROM bookings WHERE personal_id=?");
+$stmt2->bind_param("i", $personal_id);
+$stmt2->execute();
+$res2 = $stmt2->get_result();
+
+if ($res2->num_rows == 0) {
+    $_SESSION['review_error'] = "Fill form and complete booking to share your review.";
+    header("Location: user_dashboard.php");
+    exit();
+}
 
 
 /* HANDLE REVIEW SUBMISSION */

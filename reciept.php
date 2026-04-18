@@ -2,9 +2,6 @@
 // receipt.php
 include "db_connect.php";
 
-/* ===============================
-   VALIDATE BOOKING ID
-================================ */
 if (!isset($_GET['booking_id']) || !is_numeric($_GET['booking_id'])) {
     echo "<script>alert('No booking ID provided.'); window.location.href='form.php';</script>";
     exit;
@@ -12,28 +9,20 @@ if (!isset($_GET['booking_id']) || !is_numeric($_GET['booking_id'])) {
 
 $booking_id = (int) $_GET['booking_id'];
 
-/* ===============================
-   FETCH BOOKING + PAYMENT INFO
-================================ */
 $sql = "SELECT
             b.booking_id,
             b.booking_date,
             b.payment_status,
-
             pd.name,
             pd.dob,
             pd.age,
             pd.contact,
             pd.email,
-
             pr.fname AS parent_name,
             pr.fcontact AS parent_contact,
-
             r.room_number,
-
             p.amount,
             p.payment_date
-
         FROM bookings b
         JOIN personal_details pd ON b.personal_id = pd.personal_id
         JOIN parent_details pr ON pd.personal_id = pr.personal_id
@@ -41,7 +30,6 @@ $sql = "SELECT
         LEFT JOIN payments p ON b.booking_id = p.booking_id
         WHERE b.booking_id = ?
         LIMIT 1";
-
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $booking_id);
@@ -57,9 +45,6 @@ $row = $result->fetch_assoc();
 $stmt->close();
 $conn->close();
 
-/* ===============================
-   SAFE VARIABLES
-================================ */
 function s($v) {
     return htmlspecialchars((string)$v, ENT_QUOTES, 'UTF-8');
 }
@@ -80,46 +65,85 @@ $display_payment_date = $row['payment_date']
 <title>Roomify – Booking Receipt</title>
 
 <style>
-/* ===== RESET & STABILITY ===== */
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 html,body{
-  background:#f6f1f5;
-  font-family:Arial, sans-serif;
-  color:#2e1f29;
-  overflow-x:hidden;
+  background: #f6e8f0;
+  background-image:
+      radial-gradient(circle at 15% 15%, rgba(212, 83, 126, 0.35) 0%, transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(179, 120, 200, 0.38) 0%, transparent 40%),
+      radial-gradient(circle at 60% 10%, rgba(240, 180, 220, 0.4) 0%, transparent 35%),
+      radial-gradient(circle at 30% 80%, rgba(200, 150, 210, 0.35) 0%, transparent 35%);
+  font-family: Arial, sans-serif;
+  color: #2e1f29;
+  overflow-x: hidden;
+  min-height: 100vh;
 }
 
-/* ===== FONT ===== */
 @font-face{
   font-family:"fonts";
   src:url("fonts/Hello.otf");
   font-display:swap;
 }
 
-/* ===== RECEIPT CARD ===== */
+/* BUBBLES */
+.bubble{
+  position: fixed;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.b1{ width:100px; height:100px; background:rgba(212,83,126,0.18);  top:8%;    left:5%;   }
+.b2{ width:60px;  height:60px;  background:rgba(179,120,200,0.2);  top:15%;   right:8%;  }
+.b3{ width:80px;  height:80px;  background:rgba(240,160,210,0.2);  bottom:10%; left:8%;  }
+.b4{ width:50px;  height:50px;  background:rgba(200,140,220,0.22); bottom:15%; right:6%; }
+
+/* RECEIPT CARD */
 .receipt-wrapper{
-  max-width:760px;
-  margin:40px auto;
-  padding:20px;
+  max-width: 760px;
+  margin: 40px auto;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .receipt{
-  background:white;
-  border-radius:22px;
-  box-shadow:0 20px 45px rgba(0,0,0,0.1);
-  padding:40px 35px;
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 8px 32px rgba(160, 90, 140, 0.13), 0 1.5px 4px rgba(160, 90, 140, 0.07);
+  padding: 40px 35px;
+  position: relative;
+}
+
+.receipt::before{
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  background: rgba(212, 83, 126, 0.15);
+  top: -40px;
+  left: -40px;
+  z-index: -1;
+}
+
+.receipt::after{
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  background: rgba(179, 120, 200, 0.2);
+  bottom: -30px;
+  right: -30px;
+  z-index: -1;
 }
 
 .receipt h1{
   font-family:"fonts";
   font-size:36px;
   color:#6b4c5e;
-  font-weight: 100;
+  font-weight:100;
   margin-bottom:5px;
 }
 
@@ -135,7 +159,6 @@ hr{
   margin:20px 0;
 }
 
-/* ===== TABLE ===== */
 table{
   width:100%;
   border-collapse:collapse;
@@ -147,9 +170,7 @@ td{
   vertical-align:top;
 }
 
-tr:nth-child(even){
-  background:#faf6f9;
-}
+tr:nth-child(even){background:#faf6f9;}
 
 td:first-child{
   font-weight:600;
@@ -157,7 +178,6 @@ td:first-child{
   color:#4a3743;
 }
 
-/* ===== PAYMENT STATUS ===== */
 .status{
   display:inline-block;
   padding:6px 14px;
@@ -166,17 +186,9 @@ td:first-child{
   font-weight:600;
 }
 
-.paid{
-  background:#e6f4ea;
-  color:#2e7d32;
-}
+.paid{background:#e6f4ea; color:#2e7d32;}
+.pending{background:#fdecea; color:#c62828;}
 
-.pending{
-  background:#fdecea;
-  color:#c62828;
-}
-
-/* ===== ACTIONS ===== */
 .actions{
   margin-top:30px;
   text-align:center;
@@ -193,33 +205,29 @@ td:first-child{
   margin:5px;
 }
 
-.actions button:hover{
-  background:#b48fa8;
-}
+.actions button:hover{background:#b48fa8;}
 
-/* ===== PRINT ===== */
 @media print{
-  body{
-    background:white;
-  }
-  .actions{
-    display:none;
-  }
+  body{background:white;}
+  .actions{display:none;}
+  .bubble{display:none;}
 }
 
-/* ===== RESPONSIVE ===== */
 @media(max-width:768px){
-  .receipt{
-    padding:30px 22px;
-  }
-  .receipt h1{
-    font-size:30px;
-  }
+  .receipt{padding:30px 22px;}
+  .receipt h1{font-size:30px;}
 }
 </style>
+
 </head>
 
 <body>
+
+<!-- Bubbles -->
+<div class="bubble b1"></div>
+<div class="bubble b2"></div>
+<div class="bubble b3"></div>
+<div class="bubble b4"></div>
 
 <div class="receipt-wrapper">
   <div class="receipt">
@@ -228,32 +236,33 @@ td:first-child{
     <p class="sub">Official Booking Receipt</p>
 
     <hr>
-<table>
-  <tr><td>Booking ID</td><td><?php echo s($row['booking_id']); ?></td></tr>
-  <tr><td>Name</td><td><?php echo s($row['name']); ?></td></tr>
-  <tr><td>Date of Birth</td><td><?php echo s($row['dob']); ?></td></tr>
-  <tr><td>Age</td><td><?php echo s($row['age']); ?></td></tr>
-  <tr><td>Contact</td><td><?php echo s($row['contact']); ?></td></tr>
-  <tr><td>Email</td><td><?php echo s($row['email']); ?></td></tr>
-  <tr><td>Parent Name</td><td><?php echo s($row['parent_name']); ?></td></tr>
-  <tr><td>Parent Contact</td><td><?php echo s($row['parent_contact']); ?></td></tr>
-  <tr><td>Room Number</td><td><?php echo s($row['room_number']); ?></td></tr>
-  <tr><td>Booking Date</td><td><?php echo s($display_booking_date); ?></td></tr>
 
-  <tr>
-    <td>Payment Status</td>
-    <td>
-      <?php if($row['payment_status'] == 1){ ?>
-          <span class="status paid">PAID</span>
-      <?php } else { ?>
-          <span class="status pending">PENDING</span>
-      <?php } ?>
-    </td>
-  </tr>
+    <table>
+      <tr><td>Booking ID</td><td><?php echo s($row['booking_id']); ?></td></tr>
+      <tr><td>Name</td><td><?php echo s($row['name']); ?></td></tr>
+      <tr><td>Date of Birth</td><td><?php echo s($row['dob']); ?></td></tr>
+      <tr><td>Age</td><td><?php echo s($row['age']); ?></td></tr>
+      <tr><td>Contact</td><td><?php echo s($row['contact']); ?></td></tr>
+      <tr><td>Email</td><td><?php echo s($row['email']); ?></td></tr>
+      <tr><td>Parent Name</td><td><?php echo s($row['parent_name']); ?></td></tr>
+      <tr><td>Parent Contact</td><td><?php echo s($row['parent_contact']); ?></td></tr>
+      <tr><td>Room Number</td><td><?php echo s($row['room_number']); ?></td></tr>
+      <tr><td>Booking Date</td><td><?php echo s($display_booking_date); ?></td></tr>
 
-  <tr><td>Amount Paid</td><td>₹<?php echo s($row['amount'] ?? '0'); ?></td></tr>
-  <tr><td>Payment Date</td><td><?php echo s($display_payment_date); ?></td></tr>
-</table>
+      <tr>
+        <td>Payment Status</td>
+        <td>
+          <?php if($row['payment_status'] == 1){ ?>
+              <span class="status paid">PAID</span>
+          <?php } else { ?>
+              <span class="status pending">PENDING</span>
+          <?php } ?>
+        </td>
+      </tr>
+
+      <tr><td>Amount Paid</td><td>₹<?php echo s($row['amount'] ?? '0'); ?></td></tr>
+      <tr><td>Payment Date</td><td><?php echo s($display_payment_date); ?></td></tr>
+    </table>
 
     <div class="actions">
       <button onclick="window.print()">🖨️ Print Receipt</button>
